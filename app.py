@@ -7,6 +7,7 @@ app = Flask(__name__)
 @app.after_request
 def after_request(response):
     response.headers["ngrok-skip-browser-warning"] = "true"
+    response.headers["Permissions-Policy"] = 'camera=(self "https://yourshopifydomain.com")'
     return response
 
 # Add a route that sets custom User-Agent to bypass ngrok warning
