@@ -32,7 +32,7 @@ def save_photo():
         header, encoded = data.split(",", 1)
         binary = base64.b64decode(encoded)
 
-        # Make sure folder exists
+        # Make sure folder existss
         if not os.path.exists("static/captures"):
             os.makedirs("static/captures")
 

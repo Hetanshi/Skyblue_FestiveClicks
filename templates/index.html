@@ -101,12 +101,12 @@
 
       /* Capture button background */
       .capture-btn {
-        background-image: url("./Capture.jpeg");
+        background-image: url("{{ url_for('static', filename='Capture.png') }}");
       }
 
       /* Download button background */
       .download-btn {
-        background-image: url("./Download.jpeg");
+        background-image: url("{{ url_for('static', filename='Download.png') }}");
       }
     </style>
   </head>
@@ -149,12 +149,7 @@
           style="display: inline-block"
         ></a>
 
-        <a
-          id="downloadBtn"
-          class="btn download-btn"
-          style="display: none"
-          download="navratri_click.png"
-        ></a>
+        <a id="downloadBtn" class="btn download-btn" style="display: none"></a>
       </div>
     </div>
 
@@ -209,6 +204,52 @@
         currentFacingMode =
           currentFacingMode === "environment" ? "user" : "environment";
         await startCamera();
+      };
+
+      // Download/Save to gallery handler
+      downloadBtn.onclick = async (e) => {
+        e.preventDefault();
+
+        // Get the canvas data as blob
+        canvas.toBlob(
+          async (blob) => {
+            // Try Web Share API first (for mobile devices)
+            if (navigator.share && navigator.canShare) {
+              try {
+                const file = new File([blob], "navratri_photo.png", {
+                  type: "image/png",
+                });
+                if (navigator.canShare({ files: [file] })) {
+                  await navigator.share({
+                    title: "Navratri Photo",
+                    text: "Check out my Navratri photo!",
+                    files: [file],
+                  });
+                  return;
+                }
+              } catch (err) {
+                console.log("Web Share failed:", err);
+                // Fall through to fallback method
+              }
+            }
+
+            // Alternative method for mobile: Create a temporary link with proper MIME type
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "navratri_photo.png";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Show success message
+            alert("Photo saved! Check your gallery or downloads folder.");
+          },
+          "image/png",
+          1.0
+        );
       };
 
       // Capture logic (exports portrait with center-cropped video)
