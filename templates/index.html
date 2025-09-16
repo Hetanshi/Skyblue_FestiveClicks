@@ -3,8 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>Navratri Photo Frame</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+    body {
+  margin: 0;
+  padding: 0;
+  background-image: url('memphis-mini.png');
+  background-repeat: repeat;   /* repeat in both directions */
+  background-size: auto;       /* use original image size */
+}
+    .camera-wrapper {
+  position: relative;
+  max-width: 400px;   /* match your camera-container size */
+  margin: 0 auto; /* center the wrapper itself on the page */
+}
       .camera-container {
         position: relative;
         display: inline-block;
@@ -15,6 +26,11 @@
         border-radius: 10px;
         overflow: hidden;
       }
+      /* Buttons container - center aligned */
+.action-buttons {
+  width: 200px; /* spacing between capture and download */
+  margin: auto;
+}
 
       video {
         position: absolute;
@@ -70,10 +86,36 @@
         cursor: pointer;
         z-index: 2;
       }
+      /* Common button styles */
+.btn {
+  display: inline-block;
+  width: 200px;       /* adjust size as needed */
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+/* Capture button background */
+.capture-btn {
+  background-image: url('./capture.jpeg');
+}
+
+/* Download button background */
+.download-btn {
+  background-image: url('./download.jpeg');
+}
+
     </style>
   </head>
   <body>
     <h2>#SkyblueFestiveClicks</h2>
+    
+    <!-- Camera + Buttons Wrapper -->
+<div class="camera-wrapper">
 
     <!-- Camera + Frame Overlay -->
     <div class="camera-container">
@@ -102,13 +144,14 @@
 
     <!-- Action Buttons: placed directly below the camera/canvas area -->
     <br />
-    <a id="capture" style="display: bottom">
-      <button>CAPTURE PHOTO</button>
-    </a>
-    <!-- Download Button -->
-    <a id="downloadBtn" style="display: none" download="navratri_click.png">
-      <button>DOWNLOAD PHOTO</button>
-    </a>
+    <!-- Action Buttons -->
+<br />
+<div class="action-buttons">
+<a id="capture" class="btn capture-btn" style="display: inline-block"></a>
+
+<a id="downloadBtn" class="btn download-btn" style="display: none" download="navratri_click.png"></a>
+</div>
+</div>
 
     <!-- Hidden Canvas -->
     <canvas id="canvas"></canvas>
@@ -117,29 +160,6 @@
     <img id="output" style="display: none" />
 
     <script>
-      // Add ngrok-skip-browser-warning header to all requests
-      const originalFetch = window.fetch;
-      window.fetch = function (...args) {
-        if (args[1]) {
-          args[1].headers = {
-            ...args[1].headers,
-            "ngrok-skip-browser-warning": "true",
-          };
-        } else {
-          args[1] = { headers: { "ngrok-skip-browser-warning": "true" } };
-        }
-        return originalFetch.apply(this, args);
-      };
-
-      // Also override XMLHttpRequest for any other requests
-      const originalXHROpen = XMLHttpRequest.prototype.open;
-      XMLHttpRequest.prototype.open = function (method, url, ...args) {
-        this.addEventListener("loadstart", function () {
-          this.setRequestHeader("ngrok-skip-browser-warning", "true");
-        });
-        return originalXHROpen.apply(this, [method, url, ...args]);
-      };
-
       const video = document.getElementById("camera");
       const canvas = document.getElementById("canvas");
       const output = document.getElementById("output");
