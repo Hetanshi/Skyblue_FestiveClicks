@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <title>Navratri Photo Frame</title>
     <style>
-    body {
-  margin: 0;
-  padding: 0;
-  background-image: url('memphis-mini.png');
-  background-repeat: repeat;   /* repeat in both directions */
-  background-size: auto;       /* use original image size */
-}
-    .camera-wrapper {
-  position: relative;
-  max-width: 400px;   /* match your camera-container size */
-  margin: 0 auto; /* center the wrapper itself on the page */
-}
+      body {
+        margin: 0;
+        padding: 0;
+        background-image: url("memphis-mini.png");
+        background-repeat: repeat; /* repeat in both directions */
+        background-size: auto; /* use original image size */
+      }
+      .camera-wrapper {
+        position: relative;
+        max-width: 400px; /* match your camera-container size */
+        margin: 0 auto; /* center the wrapper itself on the page */
+      }
       .camera-container {
         position: relative;
         display: inline-block;
@@ -27,10 +27,10 @@
         overflow: hidden;
       }
       /* Buttons container - center aligned */
-.action-buttons {
-  width: 200px; /* spacing between capture and download */
-  margin: auto;
-}
+      .action-buttons {
+        width: 200px; /* spacing between capture and download */
+        margin: auto;
+      }
 
       video {
         position: absolute;
@@ -87,71 +87,76 @@
         z-index: 2;
       }
       /* Common button styles */
-.btn {
-  display: inline-block;
-  width: 200px;       /* adjust size as needed */
-  height: 60px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-}
+      .btn {
+        display: inline-block;
+        width: 200px; /* adjust size as needed */
+        height: 60px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+      }
 
-/* Capture button background */
-.capture-btn {
-  background-image: url('./capture.jpeg');
-}
+      /* Capture button background */
+      .capture-btn {
+        background-image: url(".download/Capture.jpeg");
+      }
 
-/* Download button background */
-.download-btn {
-  background-image: url('./download.jpeg');
-}
-
+      /* Download button background */
+      .download-btn {
+        background-image: url(".download/Download.jpeg");
+      }
     </style>
   </head>
   <body>
-    <h2>#SkyblueFestiveClicks</h2>
-    
     <!-- Camera + Buttons Wrapper -->
-<div class="camera-wrapper">
+    <div class="camera-wrapper">
+      <!-- Camera + Frame Overlay -->
+      <div class="camera-container">
+        <video id="camera" autoplay playsinline></video>
+        <button id="flipBtn" aria-label="Flip camera" title="Flip camera">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12a9 9 0 1 1-3-6.7" />
+            <polyline points="21 3 21 9 15 9" />
+          </svg>
+        </button>
+        <img
+          id="frame"
+          src="{{ url_for('static', filename='navratri_frame.png') }}"
+        />
+      </div>
 
-    <!-- Camera + Frame Overlay -->
-    <div class="camera-container">
-      <video id="camera" autoplay playsinline></video>
-      <button id="flipBtn" aria-label="Flip camera" title="Flip camera">
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M21 12a9 9 0 1 1-3-6.7" />
-          <polyline points="21 3 21 9 15 9" />
-        </svg>
-      </button>
-      <img
-        id="frame"
-        src="{{ url_for('static', filename='navratri_frame.png') }}"
-      />
+      <!-- Action Buttons: placed directly below the camera/canvas area -->
+      <br />
+      <!-- Action Buttons -->
+      <br />
+      <div class="action-buttons">
+        <a
+          id="capture"
+          class="btn capture-btn"
+          style="display: inline-block"
+        ></a>
+
+        <a
+          id="downloadBtn"
+          class="btn download-btn"
+          style="display: none"
+          download="navratri_click.png"
+        ></a>
+      </div>
     </div>
-
-    <!-- Action Buttons: placed directly below the camera/canvas area -->
-    <br />
-    <!-- Action Buttons -->
-<br />
-<div class="action-buttons">
-<a id="capture" class="btn capture-btn" style="display: inline-block"></a>
-
-<a id="downloadBtn" class="btn download-btn" style="display: none" download="navratri_click.png"></a>
-</div>
-</div>
 
     <!-- Hidden Canvas -->
     <canvas id="canvas"></canvas>
