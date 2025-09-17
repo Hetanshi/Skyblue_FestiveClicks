@@ -7,9 +7,12 @@
       body {
         margin: 0;
         padding: 0;
-        background-image: url("memphis-mini.png");
+        min-height: 100vh;
+        background-image: url("{{ url_for('static', filename='memphis-mini.png') }}");
         background-repeat: repeat; /* repeat in both directions */
         background-size: auto; /* use original image size */
+        background-attachment: fixed;
+        background-position: 0 0;
       }
       .camera-wrapper {
         position: relative;
@@ -28,8 +31,19 @@
       }
       /* Buttons container - center aligned */
       .action-buttons {
-        width: 200px; /* spacing between capture and download */
-        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* spacing between elements */
+        margin: 20px auto 0 auto;
+      }
+
+      /* Button row for horizontal layout */
+      .button-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* spacing between capture and download buttons */
       }
 
       video {
@@ -56,6 +70,19 @@
         display: none;
       }
 
+      /* Captured image styling */
+      #output {
+        display: none;
+        max-width: 400px;
+        width: 100%;
+        aspect-ratio: 9 / 16; /* same as camera container */
+        object-fit: cover;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        margin: 20px auto 0 auto; /* 20px top margin, centered */
+        order: 3; /* appears after buttons in flex container */
+      }
+
       button {
         margin-top: 10px;
         padding: 10px 20px;
@@ -70,8 +97,8 @@
       /* Flip camera button overlay */
       #flipBtn {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 30px;
+        right: 40px;
         width: 64px;
         height: 64px;
         border: none;
@@ -91,22 +118,27 @@
         display: inline-block;
         width: 200px; /* adjust size as needed */
         height: 60px;
-        background-size: cover;
+        background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
         cursor: pointer;
         border: none;
         text-decoration: none;
+        flex-shrink: 0; /* prevent buttons from shrinking */
       }
 
       /* Capture button background */
       .capture-btn {
         background-image: url("{{ url_for('static', filename='Capture.png') }}");
+        transition: none;
+        animation: none;
       }
 
       /* Download button background */
       .download-btn {
         background-image: url("{{ url_for('static', filename='Download.png') }}");
+        transition: none;
+        animation: none;
       }
     </style>
   </head>
@@ -143,21 +175,28 @@
       <!-- Action Buttons -->
       <br />
       <div class="action-buttons">
-        <a
-          id="capture"
-          class="btn capture-btn"
-          style="display: inline-block"
-        ></a>
+        <div class="button-row">
+          <a
+            id="capture"
+            class="btn capture-btn"
+            style="display: inline-block"
+          ></a>
 
-        <a id="downloadBtn" class="btn download-btn" style="display: none"></a>
+          <a
+            id="downloadBtn"
+            class="btn download-btn"
+            style="display: none"
+            download="navratri_click.png"
+          ></a>
+        </div>
+
+        <!-- Captured image will appear here -->
+        <img id="output" style="display: none" />
       </div>
     </div>
 
     <!-- Hidden Canvas -->
     <canvas id="canvas"></canvas>
-
-    <!-- Preview Output -->
-    <img id="output" style="display: none" />
 
     <script>
       const video = document.getElementById("camera");
@@ -204,52 +243,6 @@
         currentFacingMode =
           currentFacingMode === "environment" ? "user" : "environment";
         await startCamera();
-      };
-
-      // Download/Save to gallery handler
-      downloadBtn.onclick = async (e) => {
-        e.preventDefault();
-
-        // Get the canvas data as blob
-        canvas.toBlob(
-          async (blob) => {
-            // Try Web Share API first (for mobile devices)
-            if (navigator.share && navigator.canShare) {
-              try {
-                const file = new File([blob], "navratri_photo.png", {
-                  type: "image/png",
-                });
-                if (navigator.canShare({ files: [file] })) {
-                  await navigator.share({
-                    title: "Navratri Photo",
-                    text: "Check out my Navratri photo!",
-                    files: [file],
-                  });
-                  return;
-                }
-              } catch (err) {
-                console.log("Web Share failed:", err);
-                // Fall through to fallback method
-              }
-            }
-
-            // Alternative method for mobile: Create a temporary link with proper MIME type
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "navratri_photo.png";
-            a.style.display = "none";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            // Show success message
-            alert("Photo saved! Check your gallery or downloads folder.");
-          },
-          "image/png",
-          1.0
-        );
       };
 
       // Capture logic (exports portrait with center-cropped video)
@@ -311,10 +304,10 @@
         output.src = dataURL;
         output.style.display = "block";
 
-        // Enable download and swap button positions
+        // Enable download button and keep both buttons visible
         downloadBtn.href = dataURL;
         downloadBtn.style.display = "inline-block";
-        button.style.display = "none";
+        // Keep capture button visible too
 
         // Send to Flask backend
         fetch("/save_photo", {
