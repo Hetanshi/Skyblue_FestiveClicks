@@ -8,7 +8,7 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background-color: #9ad7f9;
+        background-color: #a05aff;
         background-repeat: repeat; /* repeat in both directions */
         background-size: auto; /* use original image size */
         background-attachment: fixed;
@@ -53,10 +53,19 @@
         width: 100%;
         height: 100%;
         object-fit: cover; /* fill portrait area without stretching */
+        z-index: 0; /* below captured photo */
       }
 
       /* Flip video horizontally for front camera (mirror effect) */
       video.front-camera {
+        transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -moz-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+      }
+
+      /* Flip captured photo horizontally for front camera (mirror effect) */
+      #capturedPhoto.front-camera {
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
         -moz-transform: scaleX(-1);
@@ -72,23 +81,28 @@
         height: 100%;
         pointer-events: none; /* allow clicks through */
         object-fit: cover;
+        z-index: 2; /* above captured photo */
       }
 
       #canvas {
         display: none;
       }
 
-      /* Captured image styling */
-      #output {
-        display: none;
-        max-width: 400px;
+      /* Captured photo overlay inside camera frame */
+      #capturedPhoto {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        aspect-ratio: 9 / 16; /* same as camera container */
-        object-fit: cover;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        margin: 20px auto 0 auto; /* 20px top margin, centered */
-        order: 3; /* appears after buttons in flex container */
+        height: 100%;
+        object-fit: cover; /* Same as video - fill the container */
+        display: none;
+        z-index: 1; /* above video but below frame */
+        border-radius: 10px; /* match camera container border radius */
+        pointer-events: none; /* prevent any interaction */
+        transform: none; /* ensure no transforms */
+        transition: none; /* no animations */
+        animation: none; /* no animations */
       }
 
       button {
@@ -176,6 +190,8 @@
           id="frame"
           src="{{ url_for('static', filename='navratri_frame.png') }}"
         />
+        <!-- Captured photo overlay -->
+        <img id="capturedPhoto" style="display: none" />
       </div>
 
       <!-- Action Buttons: placed directly below the camera/canvas area -->
@@ -197,9 +213,6 @@
             download="navratri_click.png"
           ></a>
         </div>
-
-        <!-- Captured image will appear here -->
-        <img id="output" style="display: none" />
       </div>
     </div>
 
@@ -209,7 +222,7 @@
     <script>
       const video = document.getElementById("camera");
       const canvas = document.getElementById("canvas");
-      const output = document.getElementById("output");
+      const capturedPhoto = document.getElementById("capturedPhoto");
       const button = document.getElementById("capture");
       const frame = document.getElementById("frame");
       const downloadBtn = document.getElementById("downloadBtn");
@@ -264,15 +277,40 @@
         // Add/remove front-camera class for mirror effect
         if (currentFacingMode === "user") {
           video.classList.add("front-camera");
+          // Also update captured photo if it's displayed
+          if (capturedPhoto.style.display === "block") {
+            capturedPhoto.classList.add("front-camera");
+          }
           console.log("Switched to front camera: mirror effect applied");
         } else {
           video.classList.remove("front-camera");
+          // Also update captured photo if it's displayed
+          if (capturedPhoto.style.display === "block") {
+            capturedPhoto.classList.remove("front-camera");
+          }
           console.log("Switched to back camera: mirror effect removed");
         }
       };
 
+      // Re-capture function
+      function recapturePhoto() {
+        // Hide captured photo and show video again
+        capturedPhoto.style.display = "none";
+        capturedPhoto.classList.remove("front-camera"); // Reset transform
+        video.style.display = "block";
+
+        // Show flip camera button again by restoring z-index
+        flipBtn.style.zIndex = "2";
+
+        // Hide download button
+        downloadBtn.style.display = "none";
+
+        // Reset capture button to original function
+        button.onclick = capturePhoto;
+      }
+
       // Capture logic (exports portrait with center-cropped video)
-      button.onclick = () => {
+      function capturePhoto() {
         if (video.videoWidth === 0 || video.videoHeight === 0) {
           alert("Video not ready yet, try again.");
           return;
@@ -326,14 +364,32 @@
         // Create image data
         const dataURL = canvas.toDataURL("image/png");
 
-        // Show preview
-        output.src = dataURL;
-        output.style.display = "block";
+        // Show captured photo inside the camera frame with exact same positioning as video
+        capturedPhoto.src = dataURL;
+        capturedPhoto.style.display = "block";
 
-        // Enable download button and keep both buttons visible
+        // Apply the same transform as video if it's front camera
+        if (currentFacingMode === "user") {
+          capturedPhoto.classList.add("front-camera");
+        } else {
+          capturedPhoto.classList.remove("front-camera");
+        }
+
+        console.log("Captured photo displayed, video hidden");
+
+        // Hide video and show captured photo
+        video.style.display = "none";
+
+        // Hide flip camera button behind captured photo by reducing z-index
+        flipBtn.style.zIndex = "0";
+
+        // Enable download button
         downloadBtn.href = dataURL;
         downloadBtn.style.display = "inline-block";
-        // Keep capture button visible too
+
+        // Change capture button to re-capture
+        button.className = "btn capture-btn";
+        button.onclick = recapturePhoto;
 
         // Send to Flask backend
         fetch("/save_photo", {
@@ -344,7 +400,10 @@
           .then((res) => res.text())
           .then((msg) => console.log("Server:", msg))
           .catch((err) => console.error("Upload failed:", err));
-      };
+      }
+
+      // Set initial button onclick
+      button.onclick = capturePhoto;
     </script>
   </body>
 </html>
