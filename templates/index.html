@@ -123,22 +123,22 @@
 
       .mandala-half {
         position: absolute;
-        width: 360px;
-        height: 360px;
+        width: 120px;
+        height: 120px;
         background-image: url("{{ url_for('static', filename='Mandala.png') }}");
-        background-size: 360px 360px;
+        background-size: 120px 120px;
         background-repeat: no-repeat;
         background-position: center;
         animation: rotate-mandala 4s linear infinite;
       }
 
       .mandala-left {
-        left: -180px; /* Position so only right half is visible with margin */
+        left: -60px; /* Position so only right half is visible with margin */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
       .mandala-right {
-        right: -180px; /* Position so only left half is visible with margin */
+        right: -60px; /* Position so only left half is visible with margin */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
