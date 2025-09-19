@@ -54,6 +54,7 @@
         position: relative;
         display: block;
         width: 100%;
+        animation: zoom-in-reveal 3s ease-out;
       }
 
       h2::before {
@@ -68,8 +69,6 @@
 
       h2 span {
         display: block;
-        overflow: hidden;
-        white-space: nowrap;
         color: #ffffff;
         position: relative;
         z-index: 1;
@@ -89,9 +88,6 @@
         z-index: -1;
         -webkit-text-stroke: 8px #ff32b4;
         text-stroke: 8px #ff32b4;
-        overflow: hidden;
-        white-space: nowrap;
-        animation: typewriter-line1 8s steps(20, end) infinite;
       }
 
       /* Line 2 - Orange background */
@@ -106,9 +102,6 @@
         z-index: -1;
         -webkit-text-stroke: 8px #ff8c00;
         text-stroke: 8px #ff8c00;
-        overflow: hidden;
-        white-space: nowrap;
-        animation: typewriter-line2 8s steps(25, end) infinite;
       }
 
       /* Line 3 - Purple background */
@@ -123,63 +116,6 @@
         z-index: -1;
         -webkit-text-stroke: 8px #8a2be2;
         text-stroke: 8px #8a2be2;
-        overflow: hidden;
-        white-space: nowrap;
-        animation: typewriter-line3 8s steps(20, end) infinite;
-      }
-
-      .line1 {
-        animation: typewriter-line1 8s steps(20, end) infinite;
-      }
-
-      .line2 {
-        animation: typewriter-line2 8s steps(25, end) infinite;
-      }
-
-      .line3 {
-        animation: typewriter-line3 8s steps(20, end) infinite;
-      }
-
-      @keyframes typewriter-line1 {
-        0%,
-        12.5% {
-          width: 0;
-        }
-        25%,
-        87.5% {
-          width: 100%;
-        }
-        100% {
-          width: 0;
-        }
-      }
-
-      @keyframes typewriter-line2 {
-        0%,
-        25% {
-          width: 0;
-        }
-        37.5%,
-        75% {
-          width: 100%;
-        }
-        100% {
-          width: 0;
-        }
-      }
-
-      @keyframes typewriter-line3 {
-        0%,
-        37.5% {
-          width: 0;
-        }
-        50%,
-        62.5% {
-          width: 100%;
-        }
-        100% {
-          width: 0;
-        }
       }
 
       .camera-wrapper {
