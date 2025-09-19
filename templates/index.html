@@ -13,7 +13,7 @@
         background-size: auto; /* use original image size */
       }
       /* Style only the top logo image */
-      body > img:first-of-type {
+      body > img {
         width: 30%; /* 30% of the screen width */
         height: auto; /* Maintains aspect ratio */
         display: block; /* Makes it a block element */
@@ -342,7 +342,18 @@
     </style>
   </head>
   <body>
-    <img src="{{ url_for('static', filename='Fuji-Film.png') }}" alt="image" />
+    <img
+      src="{{ url_for('static', filename='Fuji_Film_1.png') }}"
+      alt="image"
+    />
+    <img
+      src="{{ url_for('static', filename='Fuji_Film_2.png') }}"
+      alt="image"
+    />
+    <img
+      src="{{ url_for('static', filename='Fuji_Film_3.png') }}"
+      alt="image"
+    />
     <h2
       data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
     >
