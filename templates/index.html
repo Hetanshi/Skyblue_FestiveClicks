@@ -39,19 +39,85 @@
       h2 {
         text-align: center;
         font-family: "Trois Mille 19 Medium";
-        font-weight: 500;
-        margin: 10px auto;
+        font-weight: 600;
+        margin: 20px auto;
         line-height: 1.4;
         max-width: 600px;
-        color: #ff32b4;
-        -webkit-text-stroke: 2px #ffffff;
-        text-stroke: 3px #ffffff;
+        position: relative;
+        display: block;
+        width: 100%;
+      }
+
+      h2::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
       }
 
       h2 span {
-        display: inline-block;
+        display: block;
         overflow: hidden;
         white-space: nowrap;
+        color: #ffffff;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        margin: 0 auto;
+      }
+
+      /* Line 1 - Pink background */
+      .line1::before {
+        content: "#SkyblueFestiveClicks";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #ff32b4;
+        z-index: -1;
+        -webkit-text-stroke: 8px #ff32b4;
+        text-stroke: 8px #ff32b4;
+        overflow: hidden;
+        white-space: nowrap;
+        animation: typewriter-line1 8s steps(20, end) infinite;
+      }
+
+      /* Line 2 - Orange background */
+      .line2::before {
+        content: "#Ahmedabad #Vadodara #Surat";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #ff8c00;
+        z-index: -1;
+        -webkit-text-stroke: 8px #ff8c00;
+        text-stroke: 8px #ff8c00;
+        overflow: hidden;
+        white-space: nowrap;
+        animation: typewriter-line2 8s steps(25, end) infinite;
+      }
+
+      /* Line 3 - Purple background */
+      .line3::before {
+        content: "#Rajkot #Gandhinagar";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #8a2be2;
+        z-index: -1;
+        -webkit-text-stroke: 8px #8a2be2;
+        text-stroke: 8px #8a2be2;
+        overflow: hidden;
+        white-space: nowrap;
+        animation: typewriter-line3 8s steps(20, end) infinite;
       }
 
       .line1 {
@@ -277,7 +343,9 @@
   </head>
   <body>
     <img src="{{ url_for('static', filename='Fuji-Film.png') }}" alt="image" />
-    <h2>
+    <h2
+      data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
+    >
       <span class="line1">#SkyblueFestiveClicks</span><br />
       <span class="line2">#Ahmedabad #Vadodara #Surat</span><br />
       <span class="line3">#Rajkot #Gandhinagar</span>
