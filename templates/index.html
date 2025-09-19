@@ -48,12 +48,14 @@
         font-family: "Trois Mille 19 Medium";
         font-weight: 600;
         font-size: 18px;
-        margin: 20px auto;
+        margin: 0;
         line-height: 1.4;
         max-width: 800px;
-        position: relative;
-        display: block;
-        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
         animation: zoom-in-reveal 3s ease-out;
       }
 
@@ -82,12 +84,55 @@
 
       /* Line 2 - Orange color */
       .line2 {
-        color: #ff8c00;
+        color: #a05aff;
       }
 
       /* Line 3 - Purple color */
       .line3 {
-        color: #8a2be2;
+        color: #a05aff;
+      }
+
+      /* Mandala split effect */
+      .mandala-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid transparent; /* Responsive border */
+      }
+
+      .mandala-half {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-image: url("{{ url_for('static', filename='Mandala.png') }}");
+        background-size: 200px 200px;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation: rotate-mandala 4s linear infinite;
+      }
+
+      .mandala-left {
+        left: -100px; /* Position so only right half is visible */
+        transform: scaleX(-1); /* Flip horizontally */
+      }
+
+      .mandala-right {
+        right: -100px; /* Position so only left half is visible */
+        transform: scaleX(-1); /* Flip horizontally */
+      }
+
+      @keyframes rotate-mandala {
+        0% {
+          transform: scaleX(-1) rotate(0deg);
+        }
+        100% {
+          transform: scaleX(-1) rotate(360deg);
+        }
       }
 
       .camera-wrapper {
@@ -272,13 +317,18 @@
         alt="image"
       />
     </div>
-    <h2
-      data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
-    >
-      <span class="line1">#SkyblueFestiveClicks</span><br />
-      <span class="line2">#Ahmedabad #Vadodara #Surat</span><br />
-      <span class="line3">#Rajkot #Gandhinagar</span>
-    </h2>
+    <!-- Mandala Split Effect with Text in Center -->
+    <div class="mandala-container">
+      <div class="mandala-half mandala-left"></div>
+      <div class="mandala-half mandala-right"></div>
+      <h2
+        data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
+      >
+        <span class="line1">#SkyblueFestiveClicks</span><br />
+        <span class="line2">#Ahmedabad #Vadodara #Surat</span><br />
+        <span class="line3">#Rajkot #Gandhinagar</span>
+      </h2>
+    </div>
     <!-- Camera + Buttons Wrapper -->
     <div class="camera-wrapper">
       <!-- Camera + Frame Overlay -->
