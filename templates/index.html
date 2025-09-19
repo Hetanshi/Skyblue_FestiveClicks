@@ -118,27 +118,26 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
-        border: 1px solid transparent; /* Responsive border */
       }
 
       .mandala-half {
         position: absolute;
-        width: 200px;
-        height: 200px;
+        width: 400px;
+        height: 400px;
         background-image: url("{{ url_for('static', filename='Mandala.png') }}");
-        background-size: 200px 200px;
+        background-size: 400px 400px;
         background-repeat: no-repeat;
         background-position: center;
         animation: rotate-mandala 4s linear infinite;
       }
 
       .mandala-left {
-        left: 0; /* Stick to left edge */
+        left: -200px; /* Position so only right half is visible */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
       .mandala-right {
-        right: 0; /* Stick to right edge */
+        right: -200px; /* Position so only left half is visible */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
