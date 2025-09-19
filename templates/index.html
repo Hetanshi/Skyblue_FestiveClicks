@@ -12,14 +12,21 @@
         background-repeat: repeat; /* repeat in both directions */
         background-size: auto; /* use original image size */
       }
-      /* Style only the top logo image */
-      body > img {
-        width: 30%; /* 30% of the screen width */
-        height: auto; /* Maintains aspect ratio */
-        display: block; /* Makes it a block element */
-        margin: 20px auto; /* Centers horizontally with 20px top/bottom margin */
-        object-fit: contain; /* Ensures the image fits properly */
+      /* Style the Fuji Film images container */
+      .fuji-images-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px auto;
         animation: zoom-in-reveal 3s ease-out;
+      }
+
+      /* Style individual Fuji Film images */
+      .fuji-images-container img {
+        width: 30%; /* 30% of the container width */
+        height: auto; /* Maintains aspect ratio */
+        object-fit: contain; /* Ensures the image fits properly */
       }
 
       @keyframes zoom-in-reveal {
@@ -343,18 +350,20 @@
     </style>
   </head>
   <body>
-    <img
-      src="{{ url_for('static', filename='Fuji_Film_1.png') }}"
-      alt="image"
-    />
-    <img
-      src="{{ url_for('static', filename='Fuji_Film_2.png') }}"
-      alt="image"
-    />
-    <img
-      src="{{ url_for('static', filename='Fuji_Film_3.png') }}"
-      alt="image"
-    />
+    <div class="fuji-images-container">
+      <img
+        src="{{ url_for('static', filename='Fuji_Film_1.png') }}"
+        alt="image"
+      />
+      <img
+        src="{{ url_for('static', filename='Fuji_Film_2.png') }}"
+        alt="image"
+      />
+      <img
+        src="{{ url_for('static', filename='Fuji_Film_3.png') }}"
+        alt="image"
+      />
+    </div>
     <h2
       data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
     >
