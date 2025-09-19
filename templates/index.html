@@ -11,9 +11,99 @@
         background-color: #ffffff;
         background-repeat: repeat; /* repeat in both directions */
         background-size: auto; /* use original image size */
-        background-attachment: fixed;
-        background-position: 0 0;
       }
+      /* Style only the top logo image */
+      body > img:first-of-type {
+        width: 30%; /* 30% of the screen width */
+        height: auto; /* Maintains aspect ratio */
+        display: block; /* Makes it a block element */
+        margin: 20px auto; /* Centers horizontally with 20px top/bottom margin */
+        object-fit: contain; /* Ensures the image fits properly */
+        animation: zoom-in-reveal 3s ease-out;
+      }
+
+      @keyframes zoom-in-reveal {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(0.8);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      h2 {
+        text-align: center;
+        font-family: "Trois Mille 19 Regular";
+        margin: 10px auto;
+        line-height: 1.4;
+        max-width: 600px;
+      }
+
+      h2 span {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .line1 {
+        animation: typewriter-line1 8s steps(20, end) infinite;
+      }
+
+      .line2 {
+        animation: typewriter-line2 8s steps(25, end) infinite;
+      }
+
+      .line3 {
+        animation: typewriter-line3 8s steps(20, end) infinite;
+      }
+
+      @keyframes typewriter-line1 {
+        0%,
+        12.5% {
+          width: 0;
+        }
+        25%,
+        87.5% {
+          width: 100%;
+        }
+        100% {
+          width: 0;
+        }
+      }
+
+      @keyframes typewriter-line2 {
+        0%,
+        25% {
+          width: 0;
+        }
+        37.5%,
+        75% {
+          width: 100%;
+        }
+        100% {
+          width: 0;
+        }
+      }
+
+      @keyframes typewriter-line3 {
+        0%,
+        37.5% {
+          width: 0;
+        }
+        50%,
+        62.5% {
+          width: 100%;
+        }
+        100% {
+          width: 0;
+        }
+      }
+
       .camera-wrapper {
         position: relative;
         max-width: 400px; /* match your camera-container size */
@@ -35,7 +125,6 @@
         flex-direction: column;
         align-items: center;
         gap: 20px; /* spacing between elements */
-        margin: 20px auto 0 auto;
       }
 
       /* Button row for horizontal layout */
@@ -121,12 +210,12 @@
         position: absolute;
         top: 30px;
         right: 40px;
-        width: 64px;
-        height: 64px;
+        width: 80px;
+        height: 80px;
         border: none;
         border-radius: 50%;
         background: rgba(0, 0, 0, 0.5);
-        color: #fff;
+        color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -134,6 +223,17 @@
         line-height: 1;
         cursor: pointer;
         z-index: 2;
+      }
+
+      /* Make SVG paths white */
+      #flipBtn svg path {
+        fill: #ffffff;
+      }
+
+      /* Increase SVG size */
+      #flipBtn svg {
+        width: 80px;
+        height: 80px;
       }
       /* Common button styles */
       .btn {
@@ -156,6 +256,13 @@
         animation: none;
       }
 
+      /* Re-capture button background */
+      .recapture-btn {
+        background-image: url("{{ url_for('static', filename='Re-capture.png') }}");
+        transition: none;
+        animation: none;
+      }
+
       /* Download button background */
       .download-btn {
         background-image: url("{{ url_for('static', filename='Download.png') }}");
@@ -165,6 +272,12 @@
     </style>
   </head>
   <body>
+    <img src="{{ url_for('static', filename='Fuji-Film.png') }}" alt="image" />
+    <h2>
+      <span class="line1">#SkyblueFestiveClicks</span><br />
+      <span class="line2">#Ahmedabad #Vadodara #Surat</span><br />
+      <span class="line3">#Rajkot #Gandhinagar</span>
+    </h2>
     <!-- Camera + Buttons Wrapper -->
     <div class="camera-wrapper">
       <!-- Camera + Frame Overlay -->
@@ -172,18 +285,26 @@
         <video id="camera" autoplay playsinline></video>
         <button id="flipBtn" aria-label="Flip camera" title="Flip camera">
           <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            viewBox="0 0 40 50"
           >
-            <path d="M21 12a9 9 0 1 1-3-6.7" />
-            <polyline points="21 3 21 9 15 9" />
+            <!-- Generator: Adobe Illustrator 29.8.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 2)  -->
+            <defs>
+              <style>
+                .st0 {
+                  fill-rule: evenodd;
+                }
+              </style>
+            </defs>
+            <path
+              class="st0"
+              d="M5,17.07c0-1.93,0-2.9.46-3.63.15-.24.33-.45.54-.64.65-.58,1.6-.74,3.51-1.05l4.49-.75.19-.5c.56-1.5.84-2.25,1.4-2.74.18-.16.38-.3.6-.41.66-.35,1.46-.35,3.06-.35h1.52c1.6,0,2.41,0,3.06.35.21.11.42.25.6.41.55.49.84,1.24,1.4,2.74l.19.5,4.49.75c1.91.32,2.86.48,3.51,1.05.21.19.39.4.54.64.46.73.46,1.7.46,3.63v9.53c0,2.25,0,3.37-.57,4.16-.19.25-.41.48-.66.66-.79.57-1.91.57-4.16.57H10.4c-2.25,0-3.37,0-4.16-.57-.25-.19-.48-.41-.66-.66-.57-.79-.57-1.91-.57-4.16v-9.53ZM20,29c1.44,0,2.8-.38,3.97-1.05l-.99-1.74c-.88.5-1.89.79-2.98.79-2.97,0-5.44-2.16-5.92-5h2.48l-3.03-5.25c-.19-.33-.67-.33-.87,0l-3.03,5.25h2.43c.49,3.95,3.86,7,7.94,7ZM20,13c4.08,0,7.45,3.05,7.94,7h2.43l-3.03,5.25c-.19.33-.67.33-.87,0l-3.03-5.25h2.48c-.48-2.84-2.94-5-5.92-5-1.08,0-2.1.29-2.98.79l-.99-1.74c1.17-.67,2.53-1.05,3.97-1.05Z"
+            />
+            <path
+              d="M7.5,9.3c0-.75,0-1.12.19-1.39.06-.08.14-.16.22-.22.26-.19.64-.19,1.39-.19h.9c.75,0,1.12,0,1.39.19.08.06.16.14.22.22.19.26.19.64.19,1.39v.1l-4.5.75v-.85Z"
+            />
           </svg>
         </button>
         <img
@@ -193,10 +314,7 @@
         <!-- Captured photo overlay -->
         <img id="capturedPhoto" style="display: none" />
       </div>
-
       <!-- Action Buttons: placed directly below the camera/canvas area -->
-      <br />
-      <!-- Action Buttons -->
       <br />
       <div class="action-buttons">
         <div class="button-row">
@@ -205,7 +323,6 @@
             class="btn capture-btn"
             style="display: inline-block"
           ></a>
-
           <a
             id="downloadBtn"
             class="btn download-btn"
@@ -388,7 +505,7 @@
         downloadBtn.style.display = "inline-block";
 
         // Change capture button to re-capture
-        button.className = "btn capture-btn";
+        button.className = "btn recapture-btn";
         button.onclick = recapturePhoto;
 
         // Send to Flask backend

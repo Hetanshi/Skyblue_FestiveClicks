@@ -36,6 +36,6 @@ def save_photo():
 
 if __name__ == "__main__":
     # Use PORT env var provided by Render (or default 5000 locally)
-    port = int(os.environ.get("PORT", 5001))
+    port = int(os.environ.get("PORT", 5002))
     # Bind to 0.0.0.0 so Render can reach the container
     app.run(host="0.0.0.0", port=port, debug=False)
