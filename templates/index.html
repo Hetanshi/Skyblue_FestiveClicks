@@ -324,13 +324,20 @@
       .camera-container {
         position: relative;
         display: inline-block;
-        width: min(1080px, 100vw);
-        height: calc(min(1080px, 100vw) * 5 / 4);
+        width: 100vw;
+        height: calc(100vw * 5 / 4);
         aspect-ratio: 4 / 5;
         border: none;
         border-radius: 0;
         overflow: hidden;
         max-width: 100vw;
+      }
+      
+      @media (min-width: 1080px) {
+        .camera-container {
+          width: 1080px;
+          height: 1350px;
+        }
       }
       /* Buttons container - responsive with frame size */
       .action-buttons {
@@ -340,8 +347,14 @@
         justify-content: center;
         gap: 20px;
         margin: 20px auto;
-        width: min(1080px, 100vw);
+        width: 100vw;
         max-width: 100vw;
+      }
+      
+      @media (min-width: 1080px) {
+        .action-buttons {
+          width: 1080px;
+        }
       }
       
 
