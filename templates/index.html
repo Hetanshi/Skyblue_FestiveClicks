@@ -160,66 +160,19 @@
         line-height: 1.4;
         text-align: center;
         max-width: 100%;
-        margin: 0 auto;
         list-style-position: inside;
         position: relative;
         z-index: 2;
       }
 
       .guidelines-list ul {
-        margin: 5px 0;
         padding-left: 20px;
+        position: relative;
+        z-index: 2;
       }
 
       .guidelines-list li {
         margin: 8px 0;
-      }
-
-      /* Mandala split effect */
-      .mandala-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      .mandala-half {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background-image: url("{{ url_for('static', filename='Mandala.png') }}");
-        background-size: 300px 300px;
-        background-repeat: no-repeat;
-        background-position: center;
-        animation: rotate-mandala 4s linear infinite;
-        z-index: 20;
-      }
-
-      .mandala-left {
-        left: -150px; /* Position so only right half is visible with margin */
-        transform: scaleX(-1); /* Flip horizontally */
-      }
-
-      .mandala-right {
-        right: -150px; /* Position so only left half is visible with margin */
-        transform: scaleX(-1); /* Flip horizontally */
-      }
-
-      @keyframes rotate-mandala {
-        0% {
-          transform: scaleX(-1) rotate(0deg);
-        }
-        100% {
-          transform: scaleX(-1) rotate(360deg);
-        }
       }
 
       .camera-wrapper {
@@ -461,16 +414,10 @@
     </div>
     <br />
 
-    <!-- Guidelines Section Below Camera with Mandala -->
+    <!-- Guidelines Section Below Camera -->
     <div class="guidelines-container">
-      <!-- Mandala Split Effect -->
-      <div class="mandala-container">
-        <div class="mandala-half mandala-left"></div>
-        <div class="mandala-half mandala-right"></div>
-      </div>
-
       <h1 class="guidelines-title">Campaign Rules</h1>
-
+      <br />
       <h2 class="guidelines-subheading">Participation Process</h2>
       <br />
       <ul class="guidelines-list">
