@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
     <title>Navratri Photo Frame</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      #root, .app-container {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      
       body {
         margin: 0;
         padding: 0;
@@ -11,6 +22,11 @@
         background-color: #ffffff;
         background-repeat: repeat; /* repeat in both directions */
         background-size: auto; /* use original image size */
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
       }
       /* Style the Fuji Film images container */
       .fuji-images-container {
@@ -80,21 +96,14 @@
       /* Guidelines styling */
       .guidelines-container {
         text-align: center;
-        max-width: calc(100% - 40px);
-        width: calc(100% - 40px);
-        margin: 20px auto;
-        padding: 30px;
+        width: 100%;
+        max-width: 100%;
+        margin: 20px 0;
+        padding: 30px 20px;
         background-color: #ff32b4;
         border-radius: 15px;
         position: relative;
-      }
-
-      @media (min-width: 1200px) {
-        .guidelines-container {
-          max-width: calc(100% - 60px);
-          width: calc(100% - 60px);
-          margin-right: 60px;
-        }
+        box-sizing: border-box;
       }
 
       .guidelines-title {
@@ -163,15 +172,14 @@
         font-family: "Trois Mille 19 Medium", Arial, sans-serif;
         font-weight: bold;
         font-size: 22px;
-        margin: 40px 0 10px 0;
+        margin: 40px auto 10px auto;
         color: #000;
-        text-align: left;
+        text-align: center;
         display: block;
         position: relative;
         z-index: 2;
         width: 100%;
         list-style: none;
-        margin-left: 96px;
         padding-left: 0;
       }
 
@@ -199,24 +207,23 @@
         font-size: 16px;
         color: #000;
         line-height: 1.4;
-        text-align: left;
+        text-align: center;
         max-width: 100%;
         list-style: none;
         position: relative;
         z-index: 2;
-        margin-left: 50px;
-        margin-top: 50px;
-        padding-left: 0;
+        margin: 0 auto;
+        padding: 0;
       }
 
       .step-container {
         border: none;
         border-radius: 0;
-        margin-right: 100px auto;
+        margin: 0 auto;
         background-color: transparent;
         position: relative;
-        width: 80%;
-        text-align: right;
+        width: 100%;
+        text-align: center;
       }
 
       .camera-wrapper {
@@ -323,10 +330,10 @@
       /* Flip camera button overlay */
       #flipBtn {
         position: absolute;
-        top: 20px;
-        right: 30px;
-        width: 64px;
-        height: 64px;
+        top: 0px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
         border: none;
         border-radius: 10%;
         background: rgba(0, 0, 0, 0.5);
@@ -350,8 +357,8 @@
 
       /* Increase SVG size */
       #flipBtn svg {
-        width: 64px;
-        height: 64px;
+        width: 45px;
+        height: 45px;
       }
       /* Common button styles */
       .btn {
@@ -528,7 +535,8 @@
             console.log("Back camera: mirror effect removed");
           }
         } catch (err) {
-          alert("Camera not accessible: " + err);
+          console.error("Camera error:", err);
+          alert("Camera not accessible: " + err.message + "\n\nPlease ensure:\n1. You're using HTTPS\n2. Camera permissions are granted\n3. Your device has a camera");
         }
       }
 
@@ -593,8 +601,10 @@
 
       // Flip camera handler
       flipBtn.onclick = async () => {
+        console.log("Flip button clicked, switching from", currentFacingMode);
         currentFacingMode =
           currentFacingMode === "environment" ? "user" : "environment";
+        console.log("Switching to", currentFacingMode);
         await startCamera();
 
         // Add/remove front-camera class for mirror effect
