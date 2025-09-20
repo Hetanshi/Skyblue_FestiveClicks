@@ -18,7 +18,7 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin: 0 auto;
+        margin: 5px auto;
         animation: zoom-in-reveal 3s ease-out;
       }
 
@@ -108,36 +108,108 @@
         color: #a05aff;
       }
 
+      /* Guidelines styling */
+      .guidelines-container {
+        text-align: center;
+        max-width: 90%;
+        width: 90%;
+        margin: 20px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        position: relative;
+      }
+
+      .guidelines-title {
+        font-family: "Trois Mille 19 Bold";
+        font-weight: bold;
+        font-size: 28px;
+        margin: 0 0 20px 0;
+        color: #000;
+        position: relative;
+        z-index: 2;
+      }
+
+      .guidelines-subheading {
+        font-family: "Trois Mille 19 Medium", Arial, sans-serif;
+        font-weight: bold;
+        font-size: 22px;
+        margin: 25px 0 15px 0;
+        color: #000;
+        text-align: center;
+        display: block;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+
+      .guidelines-body {
+        font-family: "Trois Mille 19 Regular";
+        font-weight: normal;
+        font-size: 16px;
+        margin: 5px 0;
+        color: #000;
+        line-height: 1.4;
+      }
+
+      .guidelines-list {
+        font-family: "Trois Mille 19 Regular";
+        font-weight: normal;
+        font-size: 16px;
+        color: #000;
+        line-height: 1.4;
+        text-align: center;
+        max-width: 100%;
+        margin: 0 auto;
+        list-style-position: inside;
+        position: relative;
+        z-index: 2;
+      }
+
+      .guidelines-list ul {
+        margin: 5px 0;
+        padding-left: 20px;
+      }
+
+      .guidelines-list li {
+        margin: 8px 0;
+      }
+
       /* Mandala split effect */
       .mandala-container {
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 100px;
-        margin: 0 auto;
+        height: 100%;
+        margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
       }
 
       .mandala-half {
         position: absolute;
-        width: 120px;
-        height: 120px;
+        width: 300px;
+        height: 300px;
         background-image: url("{{ url_for('static', filename='Mandala.png') }}");
-        background-size: 120px 120px;
+        background-size: 300px 300px;
         background-repeat: no-repeat;
         background-position: center;
         animation: rotate-mandala 4s linear infinite;
+        z-index: 20;
       }
 
       .mandala-left {
-        left: -60px; /* Position so only right half is visible with margin */
+        left: -150px; /* Position so only right half is visible with margin */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
       .mandala-right {
-        right: -60px; /* Position so only left half is visible with margin */
+        right: -150px; /* Position so only left half is visible with margin */
         transform: scaleX(-1); /* Flip horizontally */
       }
 
@@ -153,14 +225,14 @@
       .camera-wrapper {
         position: relative;
         max-width: 400px; /* match your camera-container size */
-        margin: 0 auto; /* center the wrapper itself on the page */
+        margin: 5px auto; /* center the wrapper itself on the page */
       }
       .camera-container {
         position: relative;
         display: inline-block;
         width: 100%;
         max-width: 400px; /* adjust as needed */
-        aspect-ratio: 9 / 16; /* default to portrait; will be updated to frame ratio */
+        aspect-ratio: 4 / 5; /* default to portrait; will be updated to frame ratio */
         border: 2px solid #ccc;
         border-radius: 10px;
         overflow: hidden;
@@ -332,18 +404,7 @@
         alt="image"
       />
     </div>
-    <!-- Mandala Split Effect with Text in Center -->
-    <div class="mandala-container">
-      <div class="mandala-half mandala-left"></div>
-      <div class="mandala-half mandala-right"></div>
-      <h2
-        data-text="#SkyblueFestiveClicks #Ahmedabad #Vadodara #Surat #Rajkot #Gandhinagar"
-      >
-        <span class="line1">#SkyblueFestiveClicks</span><br />
-        <span class="line2">#Ahmedabad #Vadodara #Surat</span><br />
-        <span class="line3">#Rajkot #Gandhinagar</span>
-      </h2>
-    </div>
+    <br />
     <!-- Camera + Buttons Wrapper -->
     <div class="camera-wrapper">
       <!-- Camera + Frame Overlay -->
@@ -397,6 +458,57 @@
           ></a>
         </div>
       </div>
+    </div>
+    <br />
+
+    <!-- Guidelines Section Below Camera with Mandala -->
+    <div class="guidelines-container">
+      <!-- Mandala Split Effect -->
+      <div class="mandala-container">
+        <div class="mandala-half mandala-left"></div>
+        <div class="mandala-half mandala-right"></div>
+      </div>
+
+      <h1 class="guidelines-title">Campaign Rules</h1>
+
+      <h2 class="guidelines-subheading">Participation Process</h2>
+      <br />
+      <ul class="guidelines-list">
+        <li>Step into the SkyBlue x Fujifilm Polaroid Frame.</li>
+        <li>Scan the QR code for instructions.</li>
+        <li>Take a picture in the frame and post it on Instagram.</li>
+        <li>
+          Use hashtags:
+          <ul>
+            <li>#SkyBlueFestiveClicks</li>
+            <li>#SkyBlue & #Fujifilm</li>
+            <li>City-specific hashtag (e.g., #Ahmedabad, #Vadodara)</li>
+          </ul>
+        </li>
+        <li>Ensure your profile/post is public for tracking.</li>
+      </ul>
+      <br />
+      <h2 class="guidelines-subheading">Eligibility</h2>
+      <br />
+      <ul class="guidelines-list">
+        <li>
+          Open to all individuals in campaign cities: Ahmedabad, Gandhinagar,
+          Rajkot, Surat, Vadodara.
+        </li>
+        <li>Multiple entries allowed but only one prize per participant.</li>
+        <li>
+          Employees and direct partners of SkyBlue/Fujifilm are not eligible.
+        </li>
+      </ul>
+      <br />
+      <h2 class="guidelines-subheading">Winner Selection</h2>
+      <br />
+      <ul class="guidelines-list">
+        <li>Maximum engagement wins (likes + comments + shares).</li>
+        <li>1 winner selected from each city (total 5 winners).</li>
+        <li>Winners will receive a Fujifilm Instax camera.</li>
+        <li>Engagement counted until the campaign deadline (specify dates).</li>
+      </ul>
     </div>
 
     <!-- Hidden Canvas -->
