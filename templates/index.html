@@ -228,25 +228,63 @@
 
       .camera-wrapper {
         position: relative;
-        max-width: 400px; /* match your camera-container size */
-        margin: 5px auto; /* center the wrapper itself on the page */
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        z-index: 1;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .camera-container {
         position: relative;
         display: inline-block;
-        width: 100%;
-        max-width: 400px; /* adjust as needed */
-        aspect-ratio: 4 / 5; /* default to portrait; will be updated to frame ratio */
-        border: 2px solid #ccc;
-        border-radius: 10px;
+        width: 1080px;
+        height: 1350px;
+        max-width: 100vw;
+        max-height: 100vh;
+        aspect-ratio: 4 / 5;
+        border: none;
+        border-radius: 0;
         overflow: hidden;
       }
-      /* Buttons container - center aligned */
+      
+      @media (max-width: 1080px) {
+        .camera-container {
+          width: 100vw;
+          height: calc(100vw * 5 / 4);
+        }
+      }
+      
+      @media (max-height: 1350px) {
+        .camera-container {
+          height: 100vh;
+          width: calc(100vh * 4 / 5);
+        }
+      }
+      /* Buttons container - responsive with frame size */
       .action-buttons {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px; /* spacing between elements */
+        justify-content: center;
+        gap: 20px;
+        margin: 20px auto;
+        width: 1080px;
+        max-width: 100vw;
+      }
+      
+      @media (max-width: 1080px) {
+        .action-buttons {
+          width: 100vw;
+        }
+      }
+      
+      @media (max-height: 1350px) {
+        .action-buttons {
+          width: calc(100vh * 4 / 5);
+        }
       }
 
       /* Button row for horizontal layout */
@@ -254,7 +292,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px; /* spacing between capture and download buttons */
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
       }
 
       video {
@@ -263,8 +303,9 @@
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover; /* fill portrait area without stretching */
-        z-index: 0; /* below captured photo */
+        object-fit: cover;
+        z-index: 0;
+        border-radius: 0;
       }
 
       /* Flip video horizontally for front camera (mirror effect) */
@@ -290,9 +331,10 @@
         left: 0;
         width: 100%;
         height: 100%;
-        pointer-events: none; /* allow clicks through */
+        pointer-events: none;
         object-fit: cover;
-        z-index: 2; /* above captured photo */
+        z-index: 2;
+        border-radius: 0;
       }
 
       #canvas {
@@ -332,8 +374,8 @@
         position: absolute;
         top: 0px;
         right: 10px;
-        width: 45px;
-        height: 45px;
+        width: 80px;
+        height: 80px;
         border: none;
         border-radius: 10%;
         background: rgba(0, 0, 0, 0.5);
@@ -357,8 +399,8 @@
 
       /* Increase SVG size */
       #flipBtn svg {
-        width: 45px;
-        height: 45px;
+        width: 80px;
+        height: 80px;
       }
       /* Common button styles */
       .btn {
@@ -448,22 +490,22 @@
         <!-- Captured photo overlay -->
         <img id="capturedPhoto" style="display: none" />
       </div>
-      <!-- Action Buttons: placed directly below the camera/canvas area -->
-      <br />
-      <div class="action-buttons">
-        <div class="button-row">
-          <a
-            id="capture"
-            class="btn capture-btn"
-            style="display: inline-block"
-          ></a>
-          <a
-            id="downloadBtn"
-            class="btn download-btn"
-            style="display: none"
-            download="navratri_click.png"
-          ></a>
-        </div>
+    </div>
+    
+    <!-- Action Buttons: placed below the camera wrapper -->
+    <div class="action-buttons">
+      <div class="button-row">
+        <a
+          id="capture"
+          class="btn capture-btn"
+          style="display: inline-block"
+        ></a>
+        <a
+          id="downloadBtn"
+          class="btn download-btn"
+          style="display: none"
+          download="navratri_click.png"
+        ></a>
       </div>
     </div>
     <br />
