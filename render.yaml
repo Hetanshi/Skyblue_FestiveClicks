@@ -2,8 +2,7 @@ services:
   - type: web
     name: skyblue-festive-moments
     env: python
-    plan: free # or starter/pro, depending on your needs
-    region: oregon # change if you prefer another Render region
+    plan: pro # or starter/pro, depending on your needs
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: gunicorn app1:app
     envVars:
